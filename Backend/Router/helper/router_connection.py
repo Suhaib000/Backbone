@@ -33,10 +33,17 @@ def send_command_to_router(connection, command):
 
 def send_bulk_commands(connection, commands):
     results = {}
-    for cmd in commands:
-        try:
-            output = connection.send_command(cmd)
-            results[cmd] = output
-        except Exception as e:
-            results[cmd] = f"Error: {str(e)}"
-    return results
+    try:
+        output = connection.send_config_set(commands)  # bulk send
+    except Exception as e:
+        output =  f"Error: {str(e)}"
+    return output
+
+
+    # for cmd in commands:
+    #     try:
+    #         output = connection.send_command(cmd)
+    #         results[cmd] = output
+    #     except Exception as e:
+    #         results[cmd] = f"Error: {str(e)}"
+    # return results

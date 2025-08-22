@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Router
+from .models import Router , RollbackDetials
 
 
 class RouterSerializer(serializers.ModelSerializer):
@@ -8,4 +8,12 @@ class RouterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Router
         fields = "__all__"
-    
+
+
+
+
+class RollbackDetialserializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RollbackDetials
+        fields = "__all__"
