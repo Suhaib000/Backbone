@@ -67,7 +67,8 @@ class RouterViewSet(viewsets.ModelViewSet):
         }
         """
         try:
-            router_from = self.get_object()
+            router_id_from = request.data.get("router_id_from")
+            router_from = Router.objects.get(pk=router_id_from)
             router_id_to = request.data.get("router_id_to")
             policy_from = request.data.get("policy_from")
             policy_to = request.data.get("policy_to")
@@ -161,6 +162,7 @@ class RouterViewSet(viewsets.ModelViewSet):
         add_commands = data.get("add_commands", [])
         delete_commands = data.get("delete_commands", [])
         payload = data.get("payload", [])
+        
 
         print("payload" , payload)
 
@@ -206,7 +208,14 @@ class RouterViewSet(viewsets.ModelViewSet):
 
             results["deleted_on_router_from"] = True
 
-            RollbackDetials.objects.create(status=False , movement =payload )
+            if len(payload) >0:
+                RollbackDetials.objects.create(status=False , movement =payload )
+            else:
+                rollback_id = data.get("rollback_id", 0)
+                rollback = RollbackDetials.objects.get(pk=rollback_id)
+                rollback.status = True   # ✅ update the field
+                rollback.save()          # ✅ save the instance
+
 
 
         except Exception as e:

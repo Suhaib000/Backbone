@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import RollbackDetials , Router
 
-# Register your models here.
+admin.site.register(RollbackDetials)
+admin.site.register(Router)
